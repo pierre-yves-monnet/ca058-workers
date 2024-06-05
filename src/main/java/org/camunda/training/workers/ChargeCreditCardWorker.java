@@ -3,6 +3,7 @@ package org.camunda.training.workers;
 import io.camunda.zeebe.client.api.response.ActivatedJob;
 import io.camunda.zeebe.client.api.worker.JobClient;
 import io.camunda.zeebe.client.api.worker.JobHandler;
+import io.camunda.zeebe.spring.client.annotation.JobWorker;
 import org.camunda.training.exceptions.InvalidCreditCardException;
 import org.camunda.training.exceptions.InvalidCreditCardExpiryDate;
 import org.camunda.training.services.CreditCardService;
@@ -15,6 +16,7 @@ import java.util.Map;
 public class ChargeCreditCardWorker implements JobHandler {
 
   Logger LOGGER = LoggerFactory.getLogger(ChargeCreditCardWorker.class);
+
 
   @Override
   public void handle(JobClient jobClient, ActivatedJob job) throws Exception {

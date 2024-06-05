@@ -4,6 +4,8 @@ import io.camunda.zeebe.client.api.response.ActivatedJob;
 import io.camunda.zeebe.client.api.worker.JobClient;
 import io.camunda.zeebe.spring.client.annotation.Deployment;
 import io.camunda.zeebe.spring.client.annotation.JobWorker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -11,19 +13,21 @@ import java.util.Map;
 
 @SpringBootApplication
 @Deployment(resources = "classpath*:*.bpmn")
-public class IncidentDemo {
+public class IncidentDemoApplication {
+  static Logger LOGGER = LoggerFactory.getLogger(IncidentDemoApplication.class);
+
   public static void main(String[] args) {
-    SpringApplication.run(IncidentDemo.class, args);
+    SpringApplication.run(IncidentDemoApplication.class, args);
   }
 
   @JobWorker(type = "incidentTask")
-  public void createIncident(final JobClient client, final ActivatedJob job) {
+  public void incidentTask(final JobClient client, final ActivatedJob job) {
 
   //   System.out.println("jobworker incidentTask called...");
     Map<String, Object> variables = job.getVariablesAsMap();
     Boolean shouldFail = (Boolean) variables.get("shouldFail");
     if (shouldFail) {
-      System.out.println("jobworker incidentTask failed");
+      LOGGER.info("jobworker incidentTask failed");
       client
           .newFailCommand(job.getKey())
           .retries(job.getRetries() - 1)
