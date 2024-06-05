@@ -231,6 +231,7 @@ public class PaymentApplication {
     }
   }
 
+  /*
   private class MyOwnAuthentication implements CredentialsProvider {
 
     OAuthCredentialsProvider credentialsProvider;
@@ -244,8 +245,7 @@ public class PaymentApplication {
      * OAuthCredentialsProvider#applyCredentials(Metadata)}
      *
      * @param headers gRPC headers to be modified
-     */
-    @Override
+     *
     public void applyCredentials(Metadata headers) throws IOException {
       credentialsProvider.applyCredentials(headers);
     }
@@ -255,12 +255,21 @@ public class PaymentApplication {
      * see {@link OAuthCredentialsProvider#shouldRetryRequest(Throwable)}
      *
      * @param throwable error that caused the request to fail
-     */
+     *
     @Override
     public boolean shouldRetryRequest(Throwable throwable) {
       return false;
     }
 
-  }
+    @Override
+    public void applyCredentials(CredentialsApplier applier) throws IOException {
 
+    }
+
+    @Override
+    public boolean shouldRetryRequest(StatusCode statusCode) {
+      return false;
+    }
+  }
+*/
 }
